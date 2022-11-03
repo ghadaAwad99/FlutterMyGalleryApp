@@ -1,5 +1,5 @@
-import 'package:my_gallery_flutter/data/remote/auth/models/login_user_model.dart';
+import 'package:my_gallery_flutter/base/api_response.dart';
 
 abstract class IAuthRepository {
-  Future<UserModel> loginUser({required String email, required String password});
+  Future<ApiResponse> loginUser({required String email, required String password});
 }
