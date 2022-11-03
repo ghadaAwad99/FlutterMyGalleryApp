@@ -36,7 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children:  [
            const Padding(
-             padding:  EdgeInsets.all(8.0),
+             padding:  EdgeInsets.all(5.0),
              child: Text(
                "My\n Gallery",
                style: TextStyle(

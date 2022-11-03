@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_gallery_flutter/base/api_response.dart';
-import 'package:my_gallery_flutter/base/base_service.dart';
 import 'package:my_gallery_flutter/base/response_handler.dart';
 import 'package:my_gallery_flutter/data/remote/auth/auth_repository.dart';
 import 'package:my_gallery_flutter/data/remote/auth/i_auth_repository.dart';
-import 'package:my_gallery_flutter/data/remote/auth/models/login_user_model.dart';
 import 'package:my_gallery_flutter/ui/auth/state/login_state.dart';
+import 'package:my_gallery_flutter/ui/home/home_screen.dart';
+import 'package:my_gallery_flutter/utils/navigation/navigation_helper.dart';
 import 'package:my_gallery_flutter/utils/utils.dart';
 import 'package:ndialog/ndialog.dart';
 
@@ -39,6 +39,8 @@ class LoginViewModel extends StateNotifier<LoginState>{
          print("baseService.accessToken ${baseService.accessToken}");*/
           hideAppLoadingDialog(progressDialog);
           showSuccessMsg(message: "Logged in Successfully!");
+          Navigator.pushNamedAndRemoveUntil(
+              navigationKey.currentContext!, HomeScreen.tag, (_) => false);
         },
         onFailed: () {
           hideAppLoadingDialog(progressDialog);
