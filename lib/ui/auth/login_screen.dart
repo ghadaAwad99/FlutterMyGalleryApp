@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_gallery_flutter/ui/auth/state/login_state.dart';
 import 'package:my_gallery_flutter/ui/auth/state/login_viewModel.dart';
 import 'package:my_gallery_flutter/ui/auth/widgets/login_card.dart';
 import 'package:my_gallery_flutter/utils/app_colors.dart';
@@ -21,7 +22,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LoginViewModel viewModel = ref.read(loginViewModelProvider!.notifier);
+    LoginViewModel viewModel = ref.read(loginViewModelProvider.notifier);
+    LoginState state = ref.watch(loginViewModelProvider);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -59,7 +61,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Image.asset(AppImages.galleryIcon),
+                            child: Image.asset(AppImages.galleryGradient),
                           ),
                           Align(
                             alignment: Alignment.topRight,
