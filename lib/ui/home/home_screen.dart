@@ -1,6 +1,9 @@
-import 'dart:ui';
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_gallery_flutter/ui/auth/login_screen.dart';
 import 'package:my_gallery_flutter/ui/home/widgets/gallery_card.dart';
 import 'package:my_gallery_flutter/utils/app_images.dart';
@@ -86,18 +89,21 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           showDialog(
                               context: context,
-                              builder: (context) => AlertDialog(
-                                content: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(32),
-                                    color: Colors.white.withOpacity(0.1),
-                                  ),
+                              builder: (context) => Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                                         child: GestureDetector(
+                                          onTap: () {
+                                            pickImage();
+                                          },
                                           child: Container(
                                               decoration: BoxDecoration(
                                               color: Color(0xffefd8f9),
@@ -124,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                                         child: GestureDetector(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                color: Color(0xffefd8f9),
+                                                color: Color(0xffebf6ff),
                                                 borderRadius: BorderRadius.circular(16)
                                             ),
                                             child: Padding(
@@ -189,6 +195,18 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null) return;
+      final imageTemp = File(image.path);
+      print("image temp $imageTemp");
+      //setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
   }
 }
 
