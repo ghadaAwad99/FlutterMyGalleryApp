@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_gallery_flutter/base/api_response.dart';
 import 'package:my_gallery_flutter/base/base_service.dart';
@@ -23,11 +24,12 @@ class LoginViewModel extends StateNotifier<LoginState>{
   final IAuthRepository _authRepository;
   late ProgressDialog progressDialog;
 
-
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   void loginUser() async {
     progressDialog = showAppLoadingDialog();
-    ApiResponse response = await _authRepository.loginUser(email: 'kuphal.sydni@example.org', password: 'password');
+    ApiResponse response = await _authRepository.loginUser(email: usernameController.text, password: passwordController.text);
     handleResponse(
         result: response,
         onSuccess: () async {

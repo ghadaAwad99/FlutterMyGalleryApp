@@ -91,3 +91,6 @@ void logOut() {
   final SharedPrefsManager sharedPrefsManager = getIt.get<SharedPrefsManager>();
   sharedPrefsManager.credentials = null;
 }
+
+//kuphal.sydni@example.org
+//password

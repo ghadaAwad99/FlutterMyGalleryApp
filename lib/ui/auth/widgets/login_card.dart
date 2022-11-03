@@ -5,9 +5,14 @@ import 'package:my_gallery_flutter/utils/app_colors.dart';
 
 class LoginCard extends StatelessWidget {
   const LoginCard({
-    Key? key, required this.buttonOnPress,
+    Key? key,
+    required this.buttonOnPress,
+    required this.usernameController,
+    required this.passwordController,
   }) : super(key: key);
   final Function buttonOnPress;
+  final TextEditingController usernameController;
+  final TextEditingController passwordController;
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +31,19 @@ class LoginCard extends StatelessWidget {
               "Login",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            const CustomFormField(
-              hintText: "User Name",
-              fillColor: AppColors.lightGrey,
-              hintColor: AppColors.hintColor,
+             CustomFormField(
+               controller: usernameController,
+               hintText: "User Name",
+               fillColor: AppColors.lightGrey,
+               hintColor: AppColors.hintColor,
+               obscureText: false,
             ),
-            const CustomFormField(
-              hintText: "Password",
-              fillColor: AppColors.lightGrey,
-              hintColor: AppColors.hintColor,
+             CustomFormField(
+               controller: passwordController,
+               hintText: "Password",
+               fillColor: AppColors.lightGrey,
+               hintColor: AppColors.hintColor,
+               obscureText: true,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
