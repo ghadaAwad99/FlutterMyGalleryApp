@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_gallery_flutter/ui/auth/login_screen.dart';
 import 'package:my_gallery_flutter/ui/home/widgets/gallery_card.dart';
+import 'package:my_gallery_flutter/ui/home/widgets/welcome_header.dart';
 import 'package:my_gallery_flutter/utils/app_images.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -28,30 +29,7 @@ class HomeScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(top: 2.0, start: 16),
-                    child: Text("Welcome\n $arguments", style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric( vertical: 2,horizontal: 16.0),
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: NetworkImage('https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?cs=srgb&dl=pexels-italo-melo-2379004.jpg&fm=jpg'),
-                            fit: BoxFit.cover
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              WelcomeHeader(arguments: arguments),
               Row(
                 children: [
                   Expanded(
@@ -89,70 +67,7 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           showDialog(
                               context: context,
-                              builder: (context) => Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            pickImage();
-                                          },
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                              color: Color(0xffefd8f9),
-                                              borderRadius: BorderRadius.circular(16)
-                                            ),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsetsDirectional.only(end: 6),
-                                                      child: Image.asset(AppImages.galleryIcon, width: 27,height: 27,),
-                                                    ),
-                                                    Text("Gallery", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-                                                  ],
-                                                ),
-                                              ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                                        child: GestureDetector(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Color(0xffebf6ff),
-                                                borderRadius: BorderRadius.circular(16)
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsetsDirectional.only(end: 6),
-                                                    child: Image.asset(AppImages.cameraIcon, width: 32,height: 32,),
-                                                  ),
-                                                  Text("Camera", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
+                              builder: (context) => buildDialog()
                           );
                         },
                         child: Container(
@@ -177,7 +92,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               Expanded(
-                ///gallery grid goes here
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GridView.count(
@@ -197,11 +111,97 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future pickImage() async {
+  Dialog buildDialog() {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  pickImage(ImageSource.gallery);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0xffefd8f9),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 6),
+                          child: Image.asset(
+                            AppImages.galleryIcon,
+                            width: 27,
+                            height: 27,
+                          ),
+                        ),
+                        Text(
+                          "Gallery",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  pickImage(ImageSource.camera);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0xffebf6ff),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 6),
+                          child: Image.asset(
+                            AppImages.cameraIcon,
+                            width: 32,
+                            height: 32,
+                          ),
+                        ),
+                        Text(
+                          "Camera",
+                          style: TextStyle(
+                              fontSize: 23, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future pickImage(ImageSource imageSource) async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if(image == null) return;
-      final imageTemp = File(image.path);
+      XFile? _image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(_image == null) return;
+      final imageTemp = File(_image.path);
       print("image temp $imageTemp");
       //setState(() => this.image = imageTemp);
     } on PlatformException catch(e) {
@@ -209,5 +209,7 @@ class HomeScreen extends StatelessWidget {
     }
   }
 }
+
+
 
 
